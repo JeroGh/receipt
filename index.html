@@ -9,14 +9,15 @@
 <body>
   <div class="container">
     <div class="input-section">
-      <input type="text" id="itemName" placeholder="Item Name">
-      <input type="number" id="itemPrice" placeholder="Price (₵)">
-      <button onclick="addItem()">Add Item</button>
+      <div class="input-wrapper">
+        <input type="text" id="itemName" placeholder="Item Name">
+        <input type="number" id="itemPrice" placeholder="Price (₵)">
+        <button onclick="addItem()">Add Item</button>
+      </div>
     </div>
 
     <div class="receipt" id="receipt">
       <div class="header">
-        <!-- Add the logo here; replace 'cet-logo.png' with your logo file -->
         <img src="logo.jpg" alt="CET Laundry Logo" class="logo">
         <h2>CET Laundry Services</h2>
         <p>We Save Your Time</p>
@@ -93,13 +94,13 @@
 
     function downloadReceipt() {
       const receipt = document.getElementById('receipt');
-      html2pdf(receipt, {
+      html2pdf().from(receipt).set({
         margin: 10,
-        filename: 'cet-laundry-receipt.pdf',
+        filename: `cet-laundry-receipt_${new Date().toISOString().split('T')[0]}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm',  format: 'a4', orientation: 'portrait' }
-      });
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).save(); // Forces download instead of opening in a new tab
     }
 
     setDateAndOrderId();
