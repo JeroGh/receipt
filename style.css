@@ -3,17 +3,28 @@ body {
     background-color: #f0f4f8;
     margin: 0;
     padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
   
   .container {
+    width: 100%;
     max-width: 600px;
     margin: 0 auto;
   }
   
   .input-section {
-    display: flex;
-    gap: 10px;
+    width: 100%;
     margin-bottom: 20px;
+  }
+  
+  .input-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
   }
   
   input {
@@ -21,21 +32,24 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    flex: 1;
+    min-width: 120px;
   }
   
   input:focus {
     outline: none;
-    border-color: #0052A5; /* CET blue */
+    border-color: #0052A5;
   }
   
   button {
     padding: 10px 20px;
-    background-color: #0052A5; /* CET blue */
+    background-color: #0052A5;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s;
   }
   
   button:hover {
@@ -44,38 +58,43 @@ body {
   
   .receipt {
     background-color: white;
-    border: 2px solid #6A1B9A; /* CET purple */
+    border: 2px solid #6A1B9A;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .header {
     text-align: center;
-    border-bottom: 2px solid #FFC107; /* CET yellow */
+    border-bottom: 2px solid #FFC107;
     padding-bottom: 10px;
     margin-bottom: 15px;
   }
   
   .logo {
     max-width: 100px;
+    width: 100%;
+    height: auto;
     margin-bottom: 10px;
   }
   
   .header h2 {
-    color: #0052A5; /* CET blue */
+    color: #0052A5;
     margin: 5px 0;
-    font-size: 24px;
+    font-size: 1.5rem;
   }
   
   .header p {
-    color: #6A1B9A; /* CET purple */
-    font-size: 14px;
+    color: #6A1B9A;
+    font-size: 0.875rem;
     margin: 0;
   }
   
   .items-table {
     margin: 15px 0;
+    width: 100%;
   }
   
   .table-header {
@@ -120,6 +139,7 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 3px;
+    font-size: 0.875rem;
   }
   
   .remove-btn:hover {
@@ -129,17 +149,17 @@ body {
   .total {
     display: flex;
     justify-content: space-between;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: bold;
     padding: 10px 0;
-    border-top: 2px solid #FFC107; /* CET yellow */
+    border-top: 2px solid #FFC107;
     margin-top: 15px;
   }
   
   .footer {
     text-align: center;
-    color: #6A1B9A; /* CET purple */
-    font-size: 12px;
+    color: #6A1B9A;
+    font-size: 0.75rem;
     margin-top: 15px;
   }
   
@@ -150,10 +170,124 @@ body {
   .download-btn {
     display: block;
     margin: 20px auto;
-    background-color: #FFC107; /* CET yellow */
+    background-color: #FFC107;
     color: #333;
+    padding: 12px 24px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px; /* Limit max width for larger screens */
+    box-sizing: border-box;
   }
   
   .download-btn:hover {
     background-color: #e0a800;
+  }
+  
+  /* Tablet screens (768px - 1024px) */
+  @media (max-width: 1024px) {
+    .container {
+      max-width: 90%;
+    }
+  
+    .header h2 {
+      font-size: 1.25rem;
+    }
+  
+    .header p {
+      font-size: 0.75rem;
+    }
+  
+    input, button {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .table-header span, .item span {
+      font-size: 0.875rem;
+    }
+  
+    .total {
+      font-size: 1rem;
+    }
+  
+    .footer {
+      font-size: 0.7rem;
+    }
+  }
+  
+  /* Phone screens (below 768px) */
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+  
+    .container {
+      max-width: 100%;
+    }
+  
+    .input-wrapper {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    input {
+      width: 100%;
+      min-width: unset;
+      font-size: 16px;
+      padding: 12px;
+    }
+  
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+    }
+  
+    .receipt {
+      padding: 15px;
+    }
+  
+    .logo {
+      max-width: 80px;
+    }
+  
+    .header h2 {
+      font-size: 1.1rem;
+    }
+  
+    .header p {
+      font-size: 0.7rem;
+    }
+  
+    .table-header, .item {
+      font-size: 0.75rem;
+      padding: 8px;
+    }
+  
+    .table-header span, .item span {
+      flex: 1;
+    }
+  
+    .table-header span:last-child, .item span:last-child {
+      flex: 0.7;
+    }
+  
+    .remove-btn {
+      padding: 6px 8px;
+      font-size: 0.7rem;
+    }
+  
+    .total {
+      font-size: 0.9rem;
+    }
+  
+    .footer {
+      font-size: 0.65rem;
+    }
+  
+    .download-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+    }
   }
