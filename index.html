@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Receipt Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="input-section">
+      <input type="text" id="itemName" placeholder="Item Name">
+      <input type="number" id="itemPrice" placeholder="Price (₵)">
+      <button onclick="addItem()">Add Item</button>
+    </div>
+
+    <div class="receipt" id="receipt">
+      <div class="header">
+        <!-- Add the logo here; replace 'cet-logo.png' with your logo file -->
+        <img src="logo.jpg" alt="CET Laundry Logo" class="logo">
+        <h2>CET Laundry Services</h2>
+        <p>We Save Your Time</p>
+      </div>
+      <p><strong>Date:</strong> <span id="date"></span></p>
+      <p><strong>Order ID:</strong> #<span id="orderId"></span></p>
+      <div class="items-table">
+        <div class="table-header">
+          <span>Item</span>
+          <span>Price</span>
+          <span>Action</span>
+        </div>
+        <div id="items"></div>
+      </div>
+      <div class="total">
+        <span>Total</span>
+        <span id="totalAmount">₵0.00</span>
+      </div>
+      <div class="footer">
+        <p>Thank you for washing with us!</p>
+        <p>Visit us again!</p>
+        <p><strong>Contact:</strong> 0557 348 624 | 0207 275 052</p>
+        <p><strong>Location:</strong> Prampram, Miotso</p>
+        <p><strong>Social:</strong> @cetlaundry2022</p>
+      </div>
+    </div>
+
+    <button class="download-btn" onclick="downloadReceipt()">Download Receipt</button>
+  </div>
+
+  <script>
+    function addItem() {
+      const itemName = document.getElementById('itemName').value;
+      const itemPrice = parseFloat(document.getElementById('itemPrice').value);
+
+      if (itemName && !isNaN(itemPrice) && itemPrice >= 0) {
+        const itemsDiv = document.getElementById('items');
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        itemDiv.innerHTML = `
+          <span>${itemName}</span>
+          <span>₵${itemPrice.toFixed(2)}</span>
+          <button class="remove-btn" onclick="removeItem(this, ${itemPrice})">Remove</button>
+        `;
+        itemsDiv.appendChild(itemDiv);
+
+        updateTotal(itemPrice);
+        document.getElementById('itemName').value = '';
+        document.getElementById('itemPrice').value = '';
+      } else {
+        alert('Please enter a valid item name and a non-negative price.');
+      }
+    }
+
+    let total = 0;
+    function updateTotal(price) {
+      total += price;
+      document.getElementById('totalAmount').textContent = `₵${total.toFixed(2)}`;
+    }
+
+    function removeItem(button, price) {
+      const itemDiv = button.parentElement;
+      itemDiv.remove();
+      total -= price;
+      document.getElementById('totalAmount').textContent = `₵${total.toFixed(2)}`;
+    }
+
+    function setDateAndOrderId() {
+      const date = new Date().toLocaleDateString();
+      const orderId = Math.floor(Math.random() * 1000000);
+      document.getElementById('date').textContent = date;
+      document.getElementById('orderId').textContent = orderId;
+    }
+
+    function downloadReceipt() {
+      const receipt = document.getElementById('receipt');
+      html2pdf(receipt, {
+        margin: 10,
+        filename: 'cet-laundry-receipt.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm',  format: 'a4', orientation: 'portrait' }
+      });
+    }
+
+    setDateAndOrderId();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</body>
+</html>
